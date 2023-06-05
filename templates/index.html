@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transformada de Fourier - Análisis de Frecuencia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+h1 {
+  color: #333;
+  font-size: 28px;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .chart {
+      width: 1200px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prueba de solicitud POST</h1>
+
+  <div class="chart-container">
+    {% if image %}
+    <div class="chart">
+      <img src="data:image/png;base64,{{ image }}" alt="Gráfico FFT">
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch('/', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+          if (data.image) {
+            const chartContainer = document.querySelector('.chart-container');
+            const img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + data.image;
+            img.alt = 'Gráfico FFT';
+            const chart = document.createElement('div');
+            chart.classList.add('chart');
+            chart.appendChild(img);
+            chartContainer.appendChild(chart);
+          }
+        })
+        .catch(error => console.log(error));
+    });
+  </script>
+</body>
+</html>
